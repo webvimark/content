@@ -1,5 +1,5 @@
 <?php
-namespace webvimark\modules\content;
+namespace webvimark\modules\content\components;
 
 use yii\db\Query;
 use yii\helpers\ArrayHelper;

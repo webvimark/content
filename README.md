@@ -1,11 +1,8 @@
-User management module for Yii 2
+Pages, layouts adn stuff for Yii 2
 =====
 Provide:
-* usage of relations in views and search
-* image, sorter, status columns
-* better views
-* integrations with other my extensions
-* autocompletion
+* pages
+* text blocks
 
 Installation
 ------------
@@ -15,13 +12,13 @@ The preferred way to install this extension is through [composer](http://getcomp
 Either run
 
 ```
-php composer.phar require --prefer-dist webvimark/generators "*"
+php composer.phar require --prefer-dist webvimark/module-content "*"
 ```
 
 or add
 
 ```
-"webvimark/generators": "*"
+"webvimark/module-content": "*"
 ```
 
 to the require section of your `composer.json` file.
@@ -32,7 +29,32 @@ Configuration
 In your config/web.php
 
 ```php
-	$config['bootstrap'][] = 'gii';
+	'urlManager'   => [
+		'rules'=>[
+
+			[
+				'class' => 'webvimark\modules\content\components\PageUrlRule',
+				'pattern'=>'',
+				'route'=>'',
+				'connectionID' => 'db',
+			],
+
+			'<_c:[\w \-]+>/<id:\d+>'=>'<_c>/view',
+			'<_c:[\w \-]+>/<_a:[\w \-]+>/<id:\d+>'=>'<_c>/<_a>',
+			'<_c:[\w \-]+>/<_a:[\w \-]+>'=>'<_c>/<_a>',
+
+			'<_m:[\w \-]+>/<_c:[\w \-]+>/<_a:[\w \-]+>'=>'<_m>/<_c>/<_a>',
+			'<_m:[\w \-]+>/<_c:[\w \-]+>/<_a:[\w \-]+>/<id:\d+>'=>'<_m>/<_c>/<_a>',
+
+		],
+	],
+
+
+	'modules'=>[
+		'content' => [
+			'class' => 'webvimark\modules\content\ContentModule',
+		],
+	],
 
 ```
 
