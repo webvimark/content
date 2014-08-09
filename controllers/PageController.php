@@ -73,10 +73,18 @@ class PageController extends AdminDefaultController
 		}
 		else
 		{
-			$pagePlace = PagePlace::findOne(['code'=>$place]);
+			if ( $place )
+			{
+				$pagePlace = PagePlace::findOne(['code'=>$place]);
 
-			if ( !$pagePlace )
-				throw new NotFoundHttpException('Page not found');
+				if ( !$pagePlace )
+					throw new NotFoundHttpException('Page not found');
+			}
+			else
+			{
+				$pagePlace = null;
+			}
+
 		}
 
 		return $this->render('tree', compact('pages', 'pagePlace'));

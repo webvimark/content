@@ -52,23 +52,26 @@ class PageLayoutController extends AdminDefaultController
 
 		$groupedWidgets = $model->getWidgetsGroupedByPosition();
 
-		if ( isset( $_POST['sorted-widgets']) )
+		if ( isset( $_POST['form-submitted'] ) )
 		{
 			PageLayoutHasPageWidget::deleteAll(['page_layout_id'=>$id]);
 
-			foreach ($_POST['sorted-widgets'] as $position => $widgets)
+			if ( isset( $_POST['sorted-widgets'] ) )
 			{
-				$sorter = 0;
-				foreach ($widgets as $widgetId)
+				foreach ($_POST['sorted-widgets'] as $position => $widgets)
 				{
-					$layoutWidget = new PageLayoutHasPageWidget();
-					$layoutWidget->page_layout_id = $id;
-					$layoutWidget->page_widget_id = $widgetId;
-					$layoutWidget->position = $position;
-					$layoutWidget->sorter = $sorter;
-					$layoutWidget->save(false);
+					$sorter = 0;
+					foreach ($widgets as $widgetId)
+					{
+						$layoutWidget = new PageLayoutHasPageWidget();
+						$layoutWidget->page_layout_id = $id;
+						$layoutWidget->page_widget_id = $widgetId;
+						$layoutWidget->position = $position;
+						$layoutWidget->sorter = $sorter;
+						$layoutWidget->save(false);
 
-					$sorter++;
+						$sorter++;
+					}
 				}
 			}
 

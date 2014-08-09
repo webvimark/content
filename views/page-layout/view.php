@@ -1,5 +1,6 @@
 <?php
 
+use webvimark\modules\content\assets\SortableAsset;
 use webvimark\modules\content\models\PageLayoutHasPageWidget;
 use webvimark\modules\content\models\PageWidget;
 use yii\helpers\ArrayHelper;
@@ -36,6 +37,8 @@ $this->params['breadcrumbs'][] = $this->title;
 				'id'      => 'layout-widgets',
 //				'options' => ['class' => 'form-horizontal'],
 			]) ?>
+
+			<?= Html::hiddenInput('form-submitted', 1) ?>
 
 			<table class="table table-bordered">
 				<thead>
@@ -235,6 +238,7 @@ $('.addBtn').on('click', function(){
 //Removing widgets
 $(document).on('click', '.removeWidget', function(){
 	$('#' + $(this).data('unique-id')).remove();
+	$('.sortable').sortable();
 });
 
 JS;
@@ -253,7 +257,6 @@ CSS;
 $this->registerCss($css);
 
 $this->registerJs($js);
-$this->registerJsFile('jquery.sortable.min.js', [
-	'yii\web\YiiAsset'
-]);
+
+SortableAsset::register($this);
 ?>
