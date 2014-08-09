@@ -2,7 +2,7 @@
 
 namespace webvimark\modules\content\controllers;
 
-use webvimark\modules\content\helpers\Singleton;
+use webvimark\helpers\Singleton;
 use webvimark\modules\content\models\Page;
 use webvimark\modules\content\models\PageCustomLayout;
 use webvimark\modules\content\models\PageLayout;

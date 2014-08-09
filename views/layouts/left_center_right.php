@@ -5,7 +5,7 @@
  * @var $layoutWidgets array
  * @var $page webvimark\modules\content\models\Page
  */
-use webvimark\modules\content\helpers\Singleton;
+use webvimark\helpers\Singleton;
 use webvimark\modules\content\models\PageLayoutHasPageWidget;
 
 ?>
