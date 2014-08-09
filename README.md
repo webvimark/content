@@ -33,16 +33,7 @@ In your config/web.php
 
 ```php
 	$config['bootstrap'][] = 'gii';
-	$config['modules']['gii'] = [
-		'class'=>'yii\gii\Module',
-		'generators'=>[
-			'webvimark\generators\model\Generator',
-			'webvimark\generators\crud\Generator',
-			'webvimark\generators\module\Generator',
-			'webvimark\generators\controller\Generator',
-			'webvimark\generators\extension\Generator',
-		],
-	];
+
 ```
 
 Usage
