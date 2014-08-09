@@ -4,7 +4,7 @@ use yii\helpers\Html;
 
 /**
  * @var yii\web\View $this
- * @var app\modules\content\models\TextBlock $model
+ * @var webvimark\modules\content\models\TextBlock $model
  */
 
 $this->title = 'Редактирование текстового блока: ' . ' ' . $model->name;

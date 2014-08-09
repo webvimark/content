@@ -1,10 +1,10 @@
 <?php
 
-namespace app\modules\content\controllers;
+namespace webvimark\modules\content\controllers;
 
 use Yii;
-use app\modules\content\models\TextBlockPlace;
-use app\modules\content\models\search\TextBlockPlaceSearch;
+use webvimark\modules\content\models\TextBlockPlace;
+use webvimark\modules\content\models\search\TextBlockPlaceSearch;
 use webvimark\components\AdminDefaultController;
 use yii\filters\VerbFilter;
 
@@ -16,12 +16,12 @@ class TextBlockPlaceController extends AdminDefaultController
 	/**
 	 * @var TextBlockPlace
 	 */
-	public $modelClass = 'app\modules\content\models\TextBlockPlace';
+	public $modelClass = 'webvimark\modules\content\models\TextBlockPlace';
 
 	/**
 	 * @var TextBlockPlaceSearch
 	 */
-	public $modelSearchClass = 'app\modules\content\models\search\TextBlockPlaceSearch';
+	public $modelSearchClass = 'webvimark\modules\content\models\search\TextBlockPlaceSearch';
 
 	public function behaviors()
 	{

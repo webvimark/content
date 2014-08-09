@@ -11,7 +11,7 @@ use yii\grid\GridView;
 /**
  * @var yii\web\View $this
  * @var yii\data\ActiveDataProvider $dataProvider
- * @var app\modules\content\models\search\TextBlockPlaceSearch $searchModel
+ * @var webvimark\modules\content\models\search\TextBlockPlaceSearch $searchModel
  */
 
 $this->title = 'Места расположения текстовых блоков';

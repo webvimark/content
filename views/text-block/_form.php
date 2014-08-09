@@ -1,6 +1,6 @@
 <?php
 
-use app\modules\content\models\TextBlockPlace;
+use webvimark\modules\content\models\TextBlockPlace;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
@@ -9,7 +9,7 @@ use webvimark\extensions\ckeditor\CKEditor;
 
 /**
  * @var yii\web\View $this
- * @var app\modules\content\models\TextBlock $model
+ * @var webvimark\modules\content\models\TextBlock $model
  * @var yii\bootstrap\ActiveForm $form
  */
 ?>

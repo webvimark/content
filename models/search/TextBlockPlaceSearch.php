@@ -1,14 +1,14 @@
 <?php
 
-namespace app\modules\content\models\search;
+namespace webvimark\modules\content\models\search;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\modules\content\models\TextBlockPlace;
+use webvimark\modules\content\models\TextBlockPlace;
 
 /**
- * TextBlockPlaceSearch represents the model behind the search form about `app\modules\content\models\TextBlockPlace`.
+ * TextBlockPlaceSearch represents the model behind the search form about `webvimark\modules\content\models\TextBlockPlace`.
  */
 class TextBlockPlaceSearch extends TextBlockPlace
 {
@@ -42,15 +42,15 @@ class TextBlockPlaceSearch extends TextBlockPlace
 		}
 
 		$query->andFilterWhere([
-			'id' => $this->id,
-			'active' => $this->active,
-			'one_record' => $this->one_record,
-			'created_at' => $this->created_at,
-			'updated_at' => $this->updated_at,
+			'text_block_place.id' => $this->id,
+			'text_block_place.active' => $this->active,
+			'text_block_place.one_record' => $this->one_record,
+			'text_block_place.created_at' => $this->created_at,
+			'text_block_place.updated_at' => $this->updated_at,
 		]);
 
-        	$query->andFilterWhere(['like', 'name', $this->name])
-			->andFilterWhere(['like', 'code', $this->code]);
+        	$query->andFilterWhere(['like', 'text_block_place.name', $this->name])
+			->andFilterWhere(['like', 'text_block_place.code', $this->code]);
 
 		return $dataProvider;
 	}

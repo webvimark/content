@@ -1,14 +1,14 @@
 <?php
 
-namespace app\modules\content\models\search;
+namespace webvimark\modules\content\models\search;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\modules\content\models\TextBlock;
+use webvimark\modules\content\models\TextBlock;
 
 /**
- * TextBlockSearch represents the model behind the search form about `app\modules\content\models\TextBlock`.
+ * TextBlockSearch represents the model behind the search form about `webvimark\modules\content\models\TextBlock`.
  */
 class TextBlockSearch extends TextBlock
 {
@@ -32,7 +32,7 @@ class TextBlockSearch extends TextBlock
 
 		if ( ! \Yii::$app->request->get('sort') )
 		{
-			$query->orderBy('sorter');
+			$query->orderBy('text_block.sorter');
 		}
 
 		$query->joinWith(['textBlockPlace']);
@@ -42,6 +42,9 @@ class TextBlockSearch extends TextBlock
 			'pagination' => [
 				'pageSize' => \Yii::$app->request->cookies->getValue('_grid_page_size', 20),
 			],
+			'sort'=>[
+				'defaultOrder'=>['id'=> SORT_DESC],
+			],
 		]);
 
 		if (!($this->load($params) && $this->validate())) {
@@ -49,15 +52,15 @@ class TextBlockSearch extends TextBlock
 		}
 
 		$query->andFilterWhere([
-			'id' => $this->id,
-			'active' => $this->active,
-			'text_block_place_id' => $this->text_block_place_id,
-			'sorter' => $this->sorter,
-			'created_at' => $this->created_at,
-			'updated_at' => $this->updated_at,
+			'text_block.id' => $this->id,
+			'text_block.active' => $this->active,
+			'text_block.text_block_place_id' => $this->text_block_place_id,
+			'text_block.sorter' => $this->sorter,
+			'text_block.created_at' => $this->created_at,
+			'text_block.updated_at' => $this->updated_at,
 		]);
 
-        	$query->andFilterWhere(['like', 'name', $this->name]);
+        	$query->andFilterWhere(['like', 'text_block.name', $this->name]);
 
 		return $dataProvider;
 	}

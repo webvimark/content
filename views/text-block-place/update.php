@@ -4,7 +4,7 @@ use yii\helpers\Html;
 
 /**
  * @var yii\web\View $this
- * @var app\modules\content\models\TextBlockPlace $model
+ * @var webvimark\modules\content\models\TextBlockPlace $model
  */
 
 $this->title = 'Редактирование места расположения текстовых блоков: ' . ' ' . $model->name;

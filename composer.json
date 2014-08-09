@@ -1,0 +1,12 @@
+{
+	"name": "webvimark/module-content",
+	"description": "Pages, layouts and stuff",
+	"autoload": {
+		"psr-4": {
+			"webvimark\\modules\\content\\": ""
+		}
+	},
+	"require": {
+		"webvimark/jqtreewidget": "dev-master"
+	}
+}

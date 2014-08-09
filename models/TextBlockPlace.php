@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\content\models;
+namespace webvimark\modules\content\models;
 
 use Yii;
 use yii\helpers\Inflector;
@@ -60,7 +60,7 @@ class TextBlockPlace extends \yii\db\ActiveRecord
 		return [
 			'id' => 'ID',
 			'active' => 'Активно',
-			'one_record' => 'One Record',
+			'one_record' => 'Одна запись',
 			'name' => 'Название',
 			'code' => 'Код',
 			'created_at' => 'Создано',

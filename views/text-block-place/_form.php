@@ -6,7 +6,7 @@ use webvimark\extensions\BootstrapSwitch\BootstrapSwitch;
 
 /**
  * @var yii\web\View $this
- * @var app\modules\content\models\TextBlockPlace $model
+ * @var webvimark\modules\content\models\TextBlockPlace $model
  * @var yii\bootstrap\ActiveForm $form
  */
 ?>

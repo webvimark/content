@@ -1,6 +1,6 @@
 <?php
 
-use app\modules\content\models\TextBlockPlace;
+use webvimark\modules\content\models\TextBlockPlace;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
@@ -12,7 +12,7 @@ use yii\grid\GridView;
 /**
  * @var yii\web\View $this
  * @var yii\data\ActiveDataProvider $dataProvider
- * @var app\modules\content\models\search\TextBlockSearch $searchModel
+ * @var webvimark\modules\content\models\search\TextBlockSearch $searchModel
  */
 
 $this->title = 'Текстовые блоки';
