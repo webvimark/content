@@ -4,15 +4,15 @@ namespace webvimark\modules\content;
 
 class ContentModule extends \yii\base\Module
 {
-	public $left3ColumnCssClass = 'col-xs-3';
-	public $center3ColumnCssClass = 'col-xs-6';
-	public $right3ColumnCssClass = 'col-xs-3';
+	public $left3ColumnCssClass = 'col-xs-15';
+	public $center3ColumnCssClass = 'col-xs-30';
+	public $right3ColumnCssClass = 'col-xs-15';
 
-	public $left2ColumnCssClass = 'col-xs-3';
-	public $center2ColumnCssClass = 'col-xs-9';
-	public $right2ColumnCssClass = 'col-xs-3';
+	public $left2ColumnCssClass = 'col-xs-15';
+	public $center2ColumnCssClass = 'col-xs-45';
+	public $right2ColumnCssClass = 'col-xs-15';
 
-	public $center1ColumnCssClass = 'col-xs-12';
+	public $center1ColumnCssClass = 'col-xs-60';
 
 	/**
 	 * This layout is a parent for 4 default content layouts

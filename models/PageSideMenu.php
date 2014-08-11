@@ -45,6 +45,8 @@ class PageSideMenu extends PagePlace
 	 */
 	public function beforeValidate()
 	{
+		$this->type = static::TYPE_SIDE_MENU;
+
 		if ( ! $this->code )
 			$this->code = uniqid();
 

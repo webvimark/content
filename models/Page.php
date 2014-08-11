@@ -2,9 +2,8 @@
 
 namespace webvimark\modules\content\models;
 
+use webvimark\helpers\LittleBigHelper;
 use Yii;
-use yii\helpers\ArrayHelper;
-use yii\helpers\Inflector;
 use yii\behaviors\TimestampBehavior;
 use yii\helpers\Url;
 
@@ -248,7 +247,7 @@ class Page extends \webvimark\components\BaseActiveRecord
 	*/
 	public function beforeValidate()
 	{
-		$this->url = Inflector::slug($this->url ? $this->url : $this->name);
+		$this->url = LittleBigHelper::slug($this->url ? $this->url : $this->name);
 
 		return parent::beforeValidate();
 	}
