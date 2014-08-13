@@ -1,5 +1,7 @@
 <?php
 
+use webvimark\extensions\FormFieldsVisibility\FormFieldsVisibility;
+use webvimark\modules\content\models\Page;
 use yii\helpers\Html;
 
 /**
@@ -21,6 +23,23 @@ $this->params['breadcrumbs'][] = $this->title;
 			<strong>
 				<span class="glyphicon glyphicon-th"></span> <?= Html::encode($this->title) ?>
 			</strong>
+
+			<?php if ( $model->type == Page::TYPE_TEXT ): ?>
+
+				<?= FormFieldsVisibility::widget([
+					'model'=>$model,
+					'attributes' => [
+						'url'                   => $model->getAttributeLabel('url'),
+						'page_place_id'         => $model->getAttributeLabel('page_place_id'),
+						'page_custom_layout_id' => $model->getAttributeLabel('page_custom_layout_id'),
+						'meta_description'      => $model->getAttributeLabel('meta_description'),
+						'meta_keywords'         => $model->getAttributeLabel('meta_keywords'),
+						'meta_title'            => $model->getAttributeLabel('meta_title'),
+					],
+				]) ?>
+
+			<?php endif; ?>
+
 		</div>
 		<div class="panel-body">
 

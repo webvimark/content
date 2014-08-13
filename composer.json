@@ -8,6 +8,7 @@
 	},
 	"require": {
 		"webvimark/jqtreewidget": "dev-master",
+		"webvimark/form-fields-visibility": "dev-master",
 		"webvimark/helpers": "dev-master"
 	}
 }

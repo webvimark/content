@@ -18,8 +18,6 @@ use yii\web\NotFoundHttpException;
  */
 class ViewController extends BaseController
 {
-	public $freeAccess = true;
-	
 	/**
 	 * @param string $url
 	 *
