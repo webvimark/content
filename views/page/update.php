@@ -1,6 +1,6 @@
 <?php
 
-use app\webvimark\extensions\FormFieldsVisibility\FormFieldsVisibility;
+use webvimark\extensions\FormFieldsVisibility\FormFieldsVisibility;
 use webvimark\modules\content\models\Page;
 use webvimark\modules\content\models\PagePlace;
 use yii\helpers\Html;
