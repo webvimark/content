@@ -28,13 +28,25 @@ $this->params['breadcrumbs'][] = $this->title;
 
 				<?= FormFieldsVisibility::widget([
 					'model'=>$model,
+					'storageId'=>'page_type_text',
 					'attributes' => [
+						'is_main'               => $model->getAttributeLabel('is_main'),
 						'url'                   => $model->getAttributeLabel('url'),
 						'page_place_id'         => $model->getAttributeLabel('page_place_id'),
 						'page_custom_layout_id' => $model->getAttributeLabel('page_custom_layout_id'),
 						'meta_description'      => $model->getAttributeLabel('meta_description'),
 						'meta_keywords'         => $model->getAttributeLabel('meta_keywords'),
 						'meta_title'            => $model->getAttributeLabel('meta_title'),
+					],
+				]) ?>
+
+			<?php elseif ( $model->type == Page::TYPE_LINK ): ?>
+
+				<?= FormFieldsVisibility::widget([
+					'model'=>$model,
+					'storageId'=>'page_type_link',
+					'attributes' => [
+						'page_place_id'         => $model->getAttributeLabel('page_place_id'),
 					],
 				]) ?>
 

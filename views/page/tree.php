@@ -56,6 +56,8 @@ $this->params['breadcrumbs'][] = $this->title;
 			'statusField'   => 'active',
 			'orderField'    => 'sorter',
 			'leafName'      => function ($model) {
+					$pageName = $model->is_main == 1 ? '<span style="color:green; font-style: italic;">'.$model->name.'</span>' : $model->name;
+
 					if ( $model->type == Page::TYPE_TEXT )
 					{
 						$pageType = ' <span class="page-tree-type">Текстовая страница</span>';
@@ -69,7 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						$viewUrl = $model->link_url;
 					}
 
-					$editLink = Html::a($model->name . $pageType, ['/content/page/update', 'id'=>$model->id]);
+					$editLink = Html::a($pageName . $pageType, ['/content/page/update', 'id'=>$model->id]);
 
 					$viewLink = Html::a('<i class="fa fa-eye"></i>', $viewUrl, ['target'=>'_blank']);
 

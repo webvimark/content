@@ -89,6 +89,17 @@ class PageUrlRule extends UrlRule
 	 */
 	public function parseRequest($manager, $request)
 	{
+		// If it's base url - call main page
+		if ( $request->getPathInfo() === '' )
+		{
+			$url = $this->getMainPageUrl();
+
+			if ( $url !== false )
+			{
+				return ['content/view/page', ['url'=>$url]];
+			}
+		}
+
 		$path = rtrim($request->getPathInfo(), '/');
 
 		$parts = explode('/', $path);
@@ -130,6 +141,20 @@ class PageUrlRule extends UrlRule
 			->where([
 				'page.active'=>1,
 				'page.url'=>$url,
+			])
+			->scalar();
+	}
+
+	/**
+	 * @return bool|string
+	 */
+	protected function getMainPageUrl()
+	{
+		return (new Query())
+			->select('url')
+			->from('page')
+			->where([
+				'page.is_main'=>1,
 			])
 			->scalar();
 	}

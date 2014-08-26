@@ -18,6 +18,7 @@ use yii\helpers\Url;
  * @property string $link_url
  * @property string $body
  * @property integer $type
+ * @property integer $is_main
  * @property integer $parent_id
  * @property integer $page_place_id
  * @property integer $page_custom_layout_id
@@ -49,7 +50,7 @@ class Page extends \webvimark\components\BaseActiveRecord
 	{
 		$pages = Page::find()
 			->innerJoinWith(['pagePlace'])
-			->select(['page.name', 'page.id', 'page.parent_id', 'page.page_place_id', 'page.type', 'page.url', 'page.link_url'])
+			->select(['page.name', 'page.id', 'page.parent_id', 'page.is_main', 'page.page_place_id', 'page.type', 'page.url', 'page.link_url'])
 			->where([
 				'page.active'=>1,
 				'page_place.active'=>1,
@@ -79,7 +80,15 @@ class Page extends \webvimark\components\BaseActiveRecord
 			if ( $page['parent_id'] == $id )
 			{
 				$output[$page['id']]['label'] = $page['name'];
-				$output[$page['id']]['url'] = ($page['type'] == Page::TYPE_TEXT) ? ['/content/view/page', 'url'=>$page['url']] : $page['link_url'];
+
+				if ( $page['is_main'] == 1 )
+				{
+					$output[$page['id']]['url'] = '/';
+				}
+				else
+				{
+					$output[$page['id']]['url'] = ($page['type'] == Page::TYPE_TEXT) ? ['/content/view/page', 'url'=>$page['url']] : $page['link_url'];
+				}
 
 				$items = self::getChildrenForMenu($pages, $page['id']);
 
@@ -153,7 +162,7 @@ class Page extends \webvimark\components\BaseActiveRecord
 	public function rules()
 	{
 		return [
-			[['active', 'sorter', 'parent_id', 'page_place_id', 'page_layout_id', 'page_custom_layout_id', 'created_at', 'updated_at'], 'integer'],
+			[['active', 'sorter', 'parent_id', 'is_main', 'page_place_id', 'page_layout_id', 'page_custom_layout_id', 'created_at', 'updated_at'], 'integer'],
 			[['name'], 'required'],
 
 			['page_layout_id', 'required', 'on'=>self::TYPE_TEXT . '_scenario'],
@@ -179,6 +188,7 @@ class Page extends \webvimark\components\BaseActiveRecord
 			'url' => 'Ссылка',
 			'body' => 'Текст',
 			'type' => 'Тип',
+			'is_main' => 'Сделать главной',
 			'link_url' => 'Ссылка на страницу',
 			'parent_id' => 'Parent ID',
 			'page_place_id' => 'Расположение',
@@ -253,6 +263,38 @@ class Page extends \webvimark\components\BaseActiveRecord
 	}
 
 	/**
+	 * If page is set to be main, than remove this status from current main page
+	 *
+	 * @param bool $insert
+	 *
+	 * @return bool|void
+	 */
+	public function beforeSave($insert)
+	{
+		if ( parent::beforeSave($insert) )
+		{
+			if ( $this->is_main == 1 )
+			{
+				if ( $insert OR $this->oldAttributes['is_main'] == 0 )
+				{
+					// findAll() - just in case
+					$mainPages = Page::findAll(['is_main'=>1]);
+
+					foreach ($mainPages as $mainPage)
+					{
+						$mainPage->is_main = 0;
+						$mainPage->save(false);
+					}
+				}
+			}
+
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
 	 * If place has been changed - change it for children (it will be changed recursive)
 	 *
 	 * @param bool  $insert
@@ -270,5 +312,20 @@ class Page extends \webvimark\components\BaseActiveRecord
 		}
 
 		parent::afterSave($insert, $changedAttributes);
+	}
+
+	/**
+	 * Don't let delete main page
+	 *
+	 * @return bool
+	 */
+	public function beforeDelete()
+	{
+		if ( $this->is_main == 1 )
+		{
+			return false;
+		}
+
+		return parent::beforeDelete();
 	}
 }
