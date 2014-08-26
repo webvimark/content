@@ -62,7 +62,10 @@ $this->params['breadcrumbs'][] = $this->title;
 					{
 						$pageType = ' <span class="page-tree-type">Текстовая страница</span>';
 
-						$viewUrl = ['/content/view/page', 'url'=>$model->url];
+						if ( $model->is_main == 1 )
+							$viewUrl = '/';
+						else
+							$viewUrl = ['/content/view/page', 'url'=>$model->url];
 					}
 					else
 					{
