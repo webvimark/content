@@ -57,7 +57,6 @@ class Page extends \webvimark\components\BaseActiveRecord
 				'page_place.code'=>$place,
 			])
 			->orderBy('page.sorter')
-			->asArray()
 			->all();
 
 		return self::getChildrenForMenu($pages, null);

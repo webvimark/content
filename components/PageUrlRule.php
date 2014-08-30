@@ -6,6 +6,7 @@ use yii\helpers\ArrayHelper;
 use yii\web\Request;
 use yii\web\UrlManager;
 use yii\web\UrlRule;
+use Yii;
 
 class PageUrlRule extends UrlRule
 {
@@ -48,7 +49,14 @@ class PageUrlRule extends UrlRule
 			if ( !$this->_paramsInitialized )
 				$this->initializeParams();
 
-			return $this->getPageRecursiveUrl($params['url']);
+			if ( isset( $params['_language'] ) )
+			{
+				return $params['_language'] . '/' . $this->getPageRecursiveUrl($params['url']);
+			}
+			else
+			{
+				return $this->getPageRecursiveUrl($params['url']);
+			}
 		}
 
 		return false;  // this rule does not apply
@@ -104,13 +112,24 @@ class PageUrlRule extends UrlRule
 
 		$parts = explode('/', $path);
 
+		$languagePart = null;
+
+		// Multilingual support - remove language from parts
+		if ( isset( Yii::$app->params['mlConfig']['languages'] ) )
+		{
+			if ( array_key_exists($parts[0], Yii::$app->params['mlConfig']['languages'] ) )
+			{
+				$languagePart = array_shift($parts);
+			}
+		}
+
 		if ( count($parts) == 1 AND $parts[0] != '' )
 		{
 			$url = $this->getPageUrl($parts[0]);
 
 			if ( $url !== false )
 			{
-				return ['content/view/page', ['url'=>$url]];
+				return ['content/view/page', ['url'=>$url, '_language'=>$languagePart]];
 			}
 		}
 		elseif ( count($parts) > 1 )
@@ -122,7 +141,7 @@ class PageUrlRule extends UrlRule
 			$pageRoute = $this->getPageRecursiveUrl($url);
 
 			if ( $path == $pageRoute )
-				return ['content/view/page', ['url'=>$url]];
+				return ['content/view/page', ['url'=>$url, '_language'=>$languagePart]];
 		}
 
 		return false;  // this rule does not apply
