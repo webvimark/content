@@ -46,6 +46,13 @@ $this->params['breadcrumbs'][] = $this->title;
 								'<span class="label label-warning">Нет</span>',
 						'format'=>'raw',
 					],
+					[
+						'attribute'=>'with_children',
+						'value'=>($model->with_children == 1) ?
+								'<span class="label label-success">Да</span>' :
+								'<span class="label label-warning">Нет</span>',
+						'format'=>'raw',
+					],
 					'name',
 					'type',
 					'code',

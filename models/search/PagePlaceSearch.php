@@ -15,7 +15,7 @@ class PagePlaceSearch extends PagePlace
 	public function rules()
 	{
 		return [
-			[['id', 'active', 'sorter', 'created_at', 'updated_at'], 'integer'],
+			[['id', 'active', 'sorter', 'type', 'with_children', 'created_at', 'updated_at'], 'integer'],
 			[['name', 'code'], 'safe'],
 		];
 	}
@@ -49,6 +49,8 @@ class PagePlaceSearch extends PagePlace
 		$query->andFilterWhere([
 			'page_place.id' => $this->id,
 			'page_place.active' => $this->active,
+			'page_place.type' => $this->type,
+			'page_place.with_children' => $this->with_children,
 			'page_place.sorter' => $this->sorter,
 			'page_place.created_at' => $this->created_at,
 			'page_place.updated_at' => $this->updated_at,

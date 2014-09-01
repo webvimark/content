@@ -65,27 +65,32 @@ $this->params['breadcrumbs'][] = $this->title;
 					['class' => 'yii\grid\SerialColumn', 'options'=>['style'=>'width:10px'] ],
 
 					[
-				'attribute'=>'name',
-				'value'=>function($model){
-						return Html::a($model->name, ['update', 'id'=>$model->id], ['data-pjax'=>0]);
-					},
-				'format'=>'raw',
-			],
-			'code',
-			[
-				'class'=>'webvimark\components\StatusColumn',
-				'attribute'=>'type',
-				'optionsArray'=>[
-					[PagePlace::TYPE_BASE_MENU, 'Основное меню', false],
-					[PagePlace::TYPE_SIDE_MENU, 'Боковое меню', false],
-				],
-			],
-			[
-				'class'=>'webvimark\components\StatusColumn',
-				'attribute'=>'active',
-				'toggleUrl'=>Url::to(['toggle-attribute', 'attribute'=>'active', 'id'=>'_id_']),
-			],
-			['class' => 'webvimark\components\SorterColumn'],
+						'attribute'=>'name',
+						'value'=>function($model){
+								return Html::a($model->name, ['update', 'id'=>$model->id], ['data-pjax'=>0]);
+							},
+						'format'=>'raw',
+					],
+					'code',
+					[
+						'class'=>'webvimark\components\StatusColumn',
+						'attribute'=>'type',
+						'optionsArray'=>[
+							[PagePlace::TYPE_BASE_MENU, 'Основное меню', false],
+							[PagePlace::TYPE_SIDE_MENU, 'Боковое меню', false],
+						],
+					],
+					[
+						'class'=>'webvimark\components\StatusColumn',
+						'attribute'=>'with_children',
+						'toggleUrl'=>Url::to(['toggle-attribute', 'attribute'=>'with_children', 'id'=>'_id_']),
+					],
+					[
+						'class'=>'webvimark\components\StatusColumn',
+						'attribute'=>'active',
+						'toggleUrl'=>Url::to(['toggle-attribute', 'attribute'=>'active', 'id'=>'_id_']),
+					],
+					['class' => 'webvimark\components\SorterColumn'],
 
 					['class' => 'yii\grid\CheckboxColumn', 'options'=>['style'=>'width:10px'] ],
 					[

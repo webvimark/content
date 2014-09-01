@@ -11,6 +11,7 @@ use yii\behaviors\TimestampBehavior;
  *
  * @property integer $id
  * @property integer $active
+ * @property integer $with_children
  * @property integer $sorter
  * @property integer $type
  * @property string $name

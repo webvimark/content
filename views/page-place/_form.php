@@ -20,6 +20,8 @@ use webvimark\extensions\BootstrapSwitch\BootstrapSwitch;
 
 	<?= $form->field($model->loadDefaultValues(), 'active')->checkbox(['class'=>'b-switch'], false) ?>
 
+	<?= $form->field($model->loadDefaultValues(), 'with_children')->checkbox(['class'=>'b-switch'], false) ?>
+
 	<?= $form->field($model, 'type')->dropDownList([
 		PagePlace::TYPE_BASE_MENU=>'Основное меню',
 		PagePlace::TYPE_SIDE_MENU=>'Боковое меню',
