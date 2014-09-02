@@ -7,6 +7,7 @@ use Yii;
 use webvimark\modules\content\models\Page;
 use webvimark\modules\content\models\search\PageSearch;
 use webvimark\components\AdminDefaultController;
+use yii\base\Exception;
 use yii\filters\VerbFilter;
 use yii\web\BadRequestHttpException;
 use yii\web\NotFoundHttpException;
@@ -33,9 +34,40 @@ class PageController extends AdminDefaultController
 				'class' => VerbFilter::className(),
 				'actions' => [
 					'delete' => ['post'],
+					'inline-save' => ['post'],
 				],
 			],
 		];
+	}
+
+	/**
+	 * For inline editing via CKEditor
+	 * Echo back container ID
+	 *
+	 * @throws \yii\base\Exception
+	 */
+	public function actionInlineSave()
+	{
+		if ( Yii::$app->request->isAjax AND isset( $_POST['editabledata'], $_POST['editorID'] ) )
+		{
+			$pageId = ltrim($_POST['editorID'], 'content-page-');
+
+			$model = Page::findOne($pageId);
+
+			if ( !$model )
+			{
+				throw new NotFoundHttpException('Page not found');
+			}
+
+			$model->body = $_POST['editabledata'];
+			$model->save(false);
+
+			echo $_POST['editorID'];
+		}
+		else
+		{
+			throw new Exception("Couldn't save data");
+		}
 	}
 
 	/**

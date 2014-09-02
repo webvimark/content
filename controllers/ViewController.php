@@ -7,7 +7,9 @@ use webvimark\modules\content\models\Page;
 use webvimark\modules\content\models\PageCustomLayout;
 use webvimark\modules\content\models\PageLayout;
 use webvimark\components\BaseController;
+use yii\caching\DbDependency;
 use yii\web\NotFoundHttpException;
+use Yii;
 
 /**
  * Class ViewController
@@ -26,14 +28,7 @@ class ViewController extends BaseController
 	 */
 	public function actionPage($url)
 	{
-		$page = Page::find()
-			->joinWith(['pageLayout'])
-			->where([
-				'page.url'=>$url,
-				'page.active'=>1,
-//				'page_layout.active'=>1,
-			])
-			->one();
+		$page = $this->getCachedPageByUrl($url);
 
 		if ( !$page )
 			throw new NotFoundHttpException('Page not found');
@@ -66,6 +61,35 @@ class ViewController extends BaseController
 		}
 
 		return $this->render('page', compact('page'));
+	}
+
+	/**
+	 * @param string $url
+	 *
+	 * @return Page
+	 */
+	protected function getCachedPageByUrl($url)
+	{
+		$cacheKey = '__content_actionPage_page' . $url;
+		$page = Yii::$app->cache->get($cacheKey);
+
+		if ( $page === false )
+		{
+			$page = Page::find()
+				->joinWith(['pageLayout'])
+				->where([
+					'page.url'=>$url,
+					'page.active'=>1,
+				])
+				->one();
+
+			$dependency = new DbDependency();
+			$dependency->sql = 'SELECT MAX(updated_at) FROM (SELECT updated_at FROM page UNION SELECT updated_at FROM page_layout) as cache_content_actionPage_page';
+
+			Yii::$app->cache->set($cacheKey, $page, Yii::$app->getModule('content')->cacheTime, $dependency);
+		}
+
+		return $page;
 	}
 
 	/**

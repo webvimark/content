@@ -23,6 +23,8 @@ class ContentModule extends \yii\base\Module
 
 	public $controllerNamespace = 'webvimark\modules\content\controllers';
 
+	public $cacheTime = 86400; // 24 hours
+
 	public function init()
 	{
 		parent::init();

@@ -4,6 +4,7 @@ namespace webvimark\modules\content\models;
 
 use Yii;
 use yii\behaviors\TimestampBehavior;
+use yii\caching\DbDependency;
 
 /**
  * This is the model class for table "page_layout".
@@ -42,35 +43,47 @@ class PageLayout extends \webvimark\components\BaseActiveRecord
 	 */
 	public function getWidgetsGroupedByPosition()
 	{
-		$layoutWidgets = $this->getAllPageWidgets();
+		$cacheKey = '__content_getWidgetsGroupedByPosition_' . $this->id;
 
-		$result = [
-			'left'   => [],
-			'right'  => [],
-			'top'    => [],
-			'bottom' => [],
-		];
+		$result = Yii::$app->cache->get($cacheKey);
 
-		foreach ($layoutWidgets as $layoutWidget)
+		if ( $result === false )
 		{
-			switch ($layoutWidget->position)
+			$layoutWidgets = $this->getAllPageWidgets();
+
+			$result = [
+				'left'   => [],
+				'right'  => [],
+				'top'    => [],
+				'bottom' => [],
+			];
+
+			foreach ($layoutWidgets as $layoutWidget)
 			{
-				case PageLayoutHasPageWidget::POSITION_LEFT:
-					$result['left'][] = $layoutWidget->pageWidget;
-					break;
+				switch ($layoutWidget->position)
+				{
+					case PageLayoutHasPageWidget::POSITION_LEFT:
+						$result['left'][] = $layoutWidget->pageWidget;
+						break;
 
-				case PageLayoutHasPageWidget::POSITION_RIGHT:
-					$result['right'][] = $layoutWidget->pageWidget;
-					break;
+					case PageLayoutHasPageWidget::POSITION_RIGHT:
+						$result['right'][] = $layoutWidget->pageWidget;
+						break;
 
-				case PageLayoutHasPageWidget::POSITION_TOP:
-					$result['top'][] = $layoutWidget->pageWidget;
-					break;
+					case PageLayoutHasPageWidget::POSITION_TOP:
+						$result['top'][] = $layoutWidget->pageWidget;
+						break;
 
-				case PageLayoutHasPageWidget::POSITION_BOTTOM:
-					$result['bottom'][] = $layoutWidget->pageWidget;
-					break;
+					case PageLayoutHasPageWidget::POSITION_BOTTOM:
+						$result['bottom'][] = $layoutWidget->pageWidget;
+						break;
+				}
 			}
+
+			$dependency = new DbDependency();
+			$dependency->sql = 'SELECT MAX(updated_at) FROM (SELECT updated_at FROM page_widget UNION SELECT updated_at FROM page_layout_has_page_widget) as cache_getWidgetsGroupedByPosition';
+
+			Yii::$app->cache->set($cacheKey, $result, Yii::$app->getModule('content')->cacheTime, $dependency);
 		}
 
 		return $result;

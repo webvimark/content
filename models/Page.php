@@ -5,6 +5,7 @@ namespace webvimark\modules\content\models;
 use webvimark\helpers\LittleBigHelper;
 use Yii;
 use yii\behaviors\TimestampBehavior;
+use yii\caching\DbDependency;
 use yii\helpers\Url;
 
 /**
@@ -48,18 +49,30 @@ class Page extends \webvimark\components\BaseActiveRecord
 	 */
 	public static function getItemsForMenu($place)
 	{
-		$pages = Page::find()
-			->innerJoinWith(['pagePlace'])
-			->select(['page.name', 'page.id', 'page.parent_id', 'page.is_main', 'page.page_place_id', 'page.type', 'page.url', 'page.link_url'])
-			->where([
-				'page.active'=>1,
-				'page_place.active'=>1,
-				'page_place.code'=>$place,
-			])
-			->orderBy('page.sorter')
-			->all();
+		$result = Yii::$app->cache->get('__page_getItemsForMenu_' . $place);
 
-		return self::getChildrenForMenu($pages, null);
+		if ( $result === false )
+		{
+			$pages = Page::find()
+				->innerJoinWith(['pagePlace'])
+				->select(['page.name', 'page.id', 'page.parent_id', 'page.is_main', 'page.page_place_id', 'page.type', 'page.url', 'page.link_url'])
+				->where([
+					'page.active'=>1,
+					'page_place.active'=>1,
+					'page_place.code'=>$place,
+				])
+				->orderBy('page.sorter')
+				->all();
+
+			$result =  self::getChildrenForMenu($pages, null);
+
+			$dependency = new DbDependency();
+			$dependency->sql = 'SELECT MAX(updated_at) FROM (SELECT updated_at FROM page UNION SELECT updated_at FROM page_place) as cache_getItemsForMenu';
+
+			Yii::$app->cache->set('__page_getItemsForMenu_' . $place, $result, Yii::$app->getModule('content')->cacheTime, $dependency);
+		}
+
+		return $result;
 	}
 
 	/**
