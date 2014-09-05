@@ -30,6 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					'model'=>$model,
 					'storageId'=>'page_type_text',
 					'attributes' => [
+						'active'                => $model->getAttributeLabel('active'),
 						'is_main'               => $model->getAttributeLabel('is_main'),
 						'url'                   => $model->getAttributeLabel('url'),
 						'page_place_id'         => $model->getAttributeLabel('page_place_id'),
