@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		<div class="panel-body">
 
 			<div class="alert alert-info text-center">
-				Если вы оставите, к примеру, левую колонку пустой, то на сайте она исчезнет
+				Если вы оставите, к примеру, правую колонку пустой, то на сайте она исчезнет
 			</div>
 
 			<?php $form = ActiveForm::begin([
@@ -40,102 +40,77 @@ $this->params['breadcrumbs'][] = $this->title;
 
 			<?= Html::hiddenInput('form-submitted', 1) ?>
 
+<!--			// ================= Header =================-->
 			<table class="table table-bordered">
 				<thead>
 					<tr>
-						<th class="text-center">Левая колонка</th>
-						<th class="text-center">Центральная колонка</th>
-						<th class="text-center">Правая колонка</th>
+						<th>
+							<?= $this->render('_availableWidgets', [
+								'layoutPosition' => PageLayoutHasPageWidget::POSITION_HEADER,
+								'widgetPosition' => PageWidget::POSITION_CENTER,
+							]) ?>
+						</th>
 					</tr>
 				</thead>
 
 				<tbody>
-					<tr>
-						<th width="20%">
+				<tr>
+					<td>
+						<?= $this->render('_savedWidgets', [
+							'groupedWidgets' => $groupedWidgets,
+							'position'       => PageLayoutHasPageWidget::POSITION_HEADER,
+							'widgetIndex'    => 'header',
+						]) ?>
 
-							<div class="form-inline text-center">
-								<?= Html::dropDownList(
-									'widgets-dropdown-' . PageLayoutHasPageWidget::POSITION_LEFT,
-									null,
-									ArrayHelper::map(PageWidget::findAll([
-										'active'   => 1,
-										'position' => PageWidget::POSITION_SIDE
-									]), 'id', 'name'),
-									['class'=>'form-control input-sm', 'prompt'=>'']
-								) ?>
+					</td>
+				</tr>
+				</tbody>
+			</table>
 
-								<?= Html::tag('span', '<i class="fa fa-plus"></i>', [
-									'class'=>'btn btn-sm btn-default addBtn',
-									'data-position'=>PageLayoutHasPageWidget::POSITION_LEFT,
-								]) ?>
-							</div>
 
-						</th>
-						<th width="60%">
+<!--			// ================= Main container =================-->
+			<table class="table table-bordered">
+				<thead>
+				<tr>
+					<th width="20%">
+						<?= $this->render('_availableWidgets', [
+							'layoutPosition' => PageLayoutHasPageWidget::POSITION_LEFT,
+							'widgetPosition' => PageWidget::POSITION_SIDE,
+						]) ?>
+					</th>
+					<th width="60%">
+						<?= $this->render('_availableWidgets', [
+							'layoutPosition' => PageLayoutHasPageWidget::POSITION_TOP,
+							'widgetPosition' => PageWidget::POSITION_CENTER,
+						]) ?>
+					</th>
+					<th width="20%">
+						<?= $this->render('_availableWidgets', [
+							'layoutPosition' => PageLayoutHasPageWidget::POSITION_RIGHT,
+							'widgetPosition' => PageWidget::POSITION_SIDE,
+						]) ?>
+					</th>
+				</tr>
+				</thead>
 
-							<div class="form-inline text-center">
-								<?= Html::dropDownList(
-									'widgets-dropdown-' . PageLayoutHasPageWidget::POSITION_TOP,
-									null,
-									ArrayHelper::map(PageWidget::findAll([
-										'active'   => 1,
-										'position' => PageWidget::POSITION_CENTER
-									]), 'id', 'name'),
-									['class'=>'form-control input-sm', 'prompt'=>'']
-								) ?>
+				<tbody>
 
-								<?= Html::tag('span', '<i class="fa fa-plus"></i>', [
-									'class'=>'btn btn-sm btn-default addBtn',
-									'data-position'=>PageLayoutHasPageWidget::POSITION_TOP,
-								]) ?>
-							</div>
-						</th>
-						<th width="20%">
-
-							<div class="form-inline text-center">
-								<?= Html::dropDownList(
-									'widgets-dropdown-' . PageLayoutHasPageWidget::POSITION_RIGHT,
-									null,
-									ArrayHelper::map(PageWidget::findAll([
-										'active'   => 1,
-										'position' => PageWidget::POSITION_SIDE
-									]), 'id', 'name'),
-									['class'=>'form-control input-sm', 'prompt'=>'']
-								) ?>
-
-								<?= Html::tag('span', '<i class="fa fa-plus"></i>', [
-									'class'=>'btn btn-sm btn-default addBtn',
-									'data-position'=>PageLayoutHasPageWidget::POSITION_RIGHT,
-								]) ?>
-							</div>
-						</th>
-					</tr>
 
 					<tr>
 						<td width="20%">
-							<ul class="sortable list-unstyled" id="widget-container-<?= PageLayoutHasPageWidget::POSITION_LEFT ?>">
-
-								<?php foreach ($groupedWidgets['left'] as $leftWidget): ?>
-									<?= $this->render('addWidget', [
-										'widget'=>$leftWidget,
-										'position'=>PageLayoutHasPageWidget::POSITION_LEFT,
-									]) ?>
-								<?php endforeach ?>
-
-							</ul>
+							<?= $this->render('_savedWidgets', [
+								'groupedWidgets' => $groupedWidgets,
+								'position'       => PageLayoutHasPageWidget::POSITION_LEFT,
+								'widgetIndex'    => 'left',
+							]) ?>
 						</td>
 
 						<td width="60%">
-							<ul class="sortable list-unstyled" id="widget-container-<?= PageLayoutHasPageWidget::POSITION_TOP ?>">
-
-								<?php foreach ($groupedWidgets['top'] as $topWidget): ?>
-									<?= $this->render('addWidget', [
-										'widget'=>$topWidget,
-										'position'=>PageLayoutHasPageWidget::POSITION_TOP,
-									]) ?>
-								<?php endforeach ?>
-
-							</ul>
+							<?= $this->render('_savedWidgets', [
+								'groupedWidgets' => $groupedWidgets,
+								'position'       => PageLayoutHasPageWidget::POSITION_TOP,
+								'widgetIndex'    => 'top',
+							]) ?>
 
 							<div class="text-center well">
 								<h3>
@@ -143,29 +118,20 @@ $this->params['breadcrumbs'][] = $this->title;
 								</h3>
 							</div>
 
-							<ul class="sortable list-unstyled" id="widget-container-<?= PageLayoutHasPageWidget::POSITION_BOTTOM ?>">
+							<?= $this->render('_savedWidgets', [
+								'groupedWidgets' => $groupedWidgets,
+								'position'       => PageLayoutHasPageWidget::POSITION_BOTTOM,
+								'widgetIndex'    => 'bottom',
+							]) ?>
 
-								<?php foreach ($groupedWidgets['bottom'] as $bottomWidget): ?>
-									<?= $this->render('addWidget', [
-										'widget'=>$bottomWidget,
-										'position'=>PageLayoutHasPageWidget::POSITION_BOTTOM,
-									]) ?>
-								<?php endforeach ?>
-
-							</ul>
 						</td>
 
 						<td width="20%">
-							<ul class="sortable list-unstyled" id="widget-container-<?= PageLayoutHasPageWidget::POSITION_RIGHT ?>">
-
-								<?php foreach ($groupedWidgets['right'] as $rightWidget): ?>
-									<?= $this->render('addWidget', [
-										'widget'=>$rightWidget,
-										'position'=>PageLayoutHasPageWidget::POSITION_RIGHT,
-									]) ?>
-								<?php endforeach ?>
-
-							</ul>
+							<?= $this->render('_savedWidgets', [
+								'groupedWidgets' => $groupedWidgets,
+								'position'       => PageLayoutHasPageWidget::POSITION_RIGHT,
+								'widgetIndex'    => 'right',
+							]) ?>
 						</td>
 					</tr>
 				</tbody>
@@ -202,6 +168,36 @@ $this->params['breadcrumbs'][] = $this->title;
 				</tfoot>
 
 			</table>
+
+
+
+<!--			// ================= Footer =================-->
+			<table class="table table-bordered">
+				<thead>
+				<tr>
+					<th>
+						<?= $this->render('_availableWidgets', [
+							'layoutPosition' => PageLayoutHasPageWidget::POSITION_FOOTER,
+							'widgetPosition' => PageWidget::POSITION_CENTER,
+						]) ?>
+					</th>
+				</tr>
+				</thead>
+
+				<tbody>
+				<tr>
+					<td>
+						<?= $this->render('_savedWidgets', [
+							'groupedWidgets' => $groupedWidgets,
+							'position'       => PageLayoutHasPageWidget::POSITION_FOOTER,
+							'widgetIndex'    => 'footer',
+						]) ?>
+					</td>
+				</tr>
+				</tbody>
+			</table>
+
+
 
 			<?= Html::submitButton('<i class="fa fa-check"></i> Сохранить', ['class' => 'btn btn-success btn-lg']) ?>
 

@@ -26,6 +26,8 @@ class PageLayoutHasPageWidget extends \webvimark\components\BaseActiveRecord
 	const POSITION_RIGHT = 1;
 	const POSITION_BOTTOM = 2;
 	const POSITION_LEFT = 3;
+	const POSITION_HEADER = 4;
+	const POSITION_FOOTER = 5;
 
 
 	/**

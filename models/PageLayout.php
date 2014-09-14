@@ -56,6 +56,8 @@ class PageLayout extends \webvimark\components\BaseActiveRecord
 				'right'  => [],
 				'top'    => [],
 				'bottom' => [],
+				'header' => [],
+				'footer' => [],
 			];
 
 			foreach ($layoutWidgets as $layoutWidget)
@@ -76,6 +78,14 @@ class PageLayout extends \webvimark\components\BaseActiveRecord
 
 					case PageLayoutHasPageWidget::POSITION_BOTTOM:
 						$result['bottom'][] = $layoutWidget->pageWidget;
+						break;
+
+					case PageLayoutHasPageWidget::POSITION_HEADER:
+						$result['header'][] = $layoutWidget->pageWidget;
+						break;
+
+					case PageLayoutHasPageWidget::POSITION_FOOTER:
+						$result['footer'][] = $layoutWidget->pageWidget;
 						break;
 				}
 			}

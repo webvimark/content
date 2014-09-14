@@ -14,6 +14,15 @@ use webvimark\modules\content\models\PageLayoutHasPageWidget;
 
 <?php $this->beginContent($this->context->module->defaultParentLayout) ?>
 
+<?php if ( count($layoutWidgets['header']) > 0 ): ?>
+	<div class="row">
+		<div class="<?= $this->context->module->center1ColumnCssClass ?>">
+			<?php PageLayoutHasPageWidget::renderWidgets($layoutWidgets, 'header') ?>
+		</div>
+	</div>
+<?php endif; ?>
+
+
 	<div class="row">
 
 		<div class="<?= $this->context->module->center1ColumnCssClass ?>">
@@ -25,5 +34,14 @@ use webvimark\modules\content\models\PageLayoutHasPageWidget;
 		</div>
 
 	</div>
+
+<?php if ( count($layoutWidgets['footer']) > 0 ): ?>
+	<div class="row">
+		<div class="<?= $this->context->module->center1ColumnCssClass ?>">
+			<?php PageLayoutHasPageWidget::renderWidgets($layoutWidgets, 'footer') ?>
+		</div>
+	</div>
+<?php endif; ?>
+
 
 <?php $this->endContent() ?>
