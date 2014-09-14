@@ -83,6 +83,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					[
 						'class'=>'webvimark\components\StatusColumn',
 						'attribute'=>'with_image',
+						'toggleUrl'=>Url::to(['toggle-attribute', 'attribute'=>'with_image', 'id'=>'_id_']),
 					],
 					[
 						'class'=>'webvimark\components\StatusColumn',
