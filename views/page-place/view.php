@@ -1,5 +1,6 @@
 <?php
 
+use webvimark\modules\content\models\PagePlace;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -53,8 +54,26 @@ $this->params['breadcrumbs'][] = $this->title;
 								'<span class="label label-warning">Нет</span>',
 						'format'=>'raw',
 					],
+					[
+						'attribute'=>'with_image',
+						'value'=>($model->with_image == 1) ?
+								'<span class="label label-success">Да</span>' :
+								'<span class="label label-warning">Нет</span>',
+						'format'=>'raw',
+					],
+					[
+						'attribute'=>'image_before_label',
+						'value'=>($model->image_before_label == 1) ?
+								'<span class="label label-success">Да</span>' :
+								'<span class="label label-warning">Нет</span>',
+						'format'=>'raw',
+						'visible'=>($model->with_image == 1),
+					],
 					'name',
-					'type',
+					[
+						'attribute'=>'type',
+						'value'=>($model->type == PagePlace::TYPE_BASE_MENU) ? 'Основное меню' : 'Боковое меню',
+					],
 					'code',
 					'created_at:datetime',
 					'updated_at:datetime',

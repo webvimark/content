@@ -19,9 +19,12 @@ use webvimark\extensions\BootstrapSwitch\BootstrapSwitch;
 <div class="page-form">
 
 	<?php $form = ActiveForm::begin([
-		'id'=>'page-form',
-		'layout'=>'horizontal',
-		]); ?>
+		'id'      => 'page-form',
+		'layout'  => 'horizontal',
+		'options' => [
+			'enctype' => "multipart/form-data",
+		]
+	]); ?>
 
 	<?= $form->field($model->loadDefaultValues(), 'active')->checkbox(['class'=>'b-switch'], false) ?>
 
@@ -44,6 +47,31 @@ use webvimark\extensions\BootstrapSwitch\BootstrapSwitch;
 	<?php else: ?>
 
 		<?= $form->field($model, 'url')->textInput(['maxlength' => 255]) ?>
+
+		<?php if ( $model->pagePlace AND $model->pagePlace->with_image == 1 ): ?>
+
+			<?php if ( ! $model->isNewRecord AND is_file($model->getImagePath('full', 'menu_image'))): ?>
+				<div class='form-group field-page-menu_image'>
+					<div class='col-sm-3'></div>
+					<div class='col-sm-6'>
+						<?= Html::img($model->getImageUrl('full', 'menu_image'), ['alt'=>'menu_image']) ?>
+						<br/>
+						<?= Html::a(
+							'<i class="fa fa-trash-o"></i>',
+							['delete-menu-image', 'pageId'=>$model->id],
+							[
+								'style'=>'color:red',
+								'data-confirm'=>'Вы уверены ?',
+							]
+						) ?>
+					</div>
+				</div>
+
+			<?php endif; ?>
+
+			<?= $form->field($model, 'menu_image', ['enableClientValidation'=>false, 'enableAjaxValidation'=>false])
+				->fileInput(['class'=>'form-control']) ?>
+		<?php endif; ?>
 
 		<?= $form->field($model, 'page_place_id')
 			->dropDownList(

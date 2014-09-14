@@ -6,6 +6,7 @@ use webvimark\helpers\LittleBigHelper;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\caching\DbDependency;
+use yii\helpers\Html;
 use yii\helpers\Url;
 
 /**
@@ -18,6 +19,7 @@ use yii\helpers\Url;
  * @property string $url
  * @property string $link_url
  * @property string $body
+ * @property string $menu_image
  * @property integer $type
  * @property integer $is_main
  * @property integer $parent_id
@@ -42,7 +44,13 @@ class Page extends \webvimark\components\BaseActiveRecord
 	const TYPE_TEXT = 0;
 	const TYPE_LINK = 1;
 
+	public $thumbs = [
+		'full' => null,
+	];
+
 	/**
+	 * Used in Menu or Nav widget
+	 *
 	 * @param string $place
 	 *
 	 * @return array
@@ -55,7 +63,19 @@ class Page extends \webvimark\components\BaseActiveRecord
 		{
 			$pages = Page::find()
 				->innerJoinWith(['pagePlace'])
-				->select(['page.name', 'page.id', 'page.parent_id', 'page.is_main', 'page.page_place_id', 'page.type', 'page.url', 'page.link_url'])
+				->select([
+					'page.name',
+					'page_place.with_image',
+					'page_place.image_before_label',
+					'page.menu_image',
+					'page.id',
+					'page.parent_id',
+					'page.is_main',
+					'page.page_place_id',
+					'page.type',
+					'page.url',
+					'page.link_url'
+				])
 				->where([
 					'page.active'=>1,
 					'page_place.active'=>1,
@@ -78,7 +98,7 @@ class Page extends \webvimark\components\BaseActiveRecord
 	/**
 	 * Helper for "getItemsForMenu"
 	 *
-	 * @param array    $pages
+	 * @param Page[]    $pages
 	 * @param int|null $id
 	 *
 	 * @return array
@@ -89,29 +109,73 @@ class Page extends \webvimark\components\BaseActiveRecord
 
 		foreach ($pages as $page)
 		{
-			if ( $page['parent_id'] == $id )
+			if ( $page->parent_id == $id )
 			{
-				$output[$page['id']]['label'] = $page['name'];
+				self::makeLabelForMenu($output, $page);
 
-				if ( $page['is_main'] == 1 )
-				{
-					$output[$page['id']]['url'] = '/';
-				}
-				else
-				{
-					$output[$page['id']]['url'] = ($page['type'] == Page::TYPE_TEXT) ? ['/content/view/page', 'url'=>$page['url']] : $page['link_url'];
-				}
+				self::makeUrlForMenu($output, $page);
 
-				$items = self::getChildrenForMenu($pages, $page['id']);
+				$items = self::getChildrenForMenu($pages, $page->id);
 
 				if ( $items )
 				{
-					$output[$page['id']]['items'] = $items;
+					$output[$page->id]['items'] = $items;
 				}
 			}
 		}
 
 		return $output;
+	}
+
+	/**
+	 * Helper for "getChildrenForMenu"
+	 *
+	 * Check if this menu has images in labels and render them before or after label
+	 *
+	 * @param array $output
+	 * @param Page|array $page
+	 */
+	protected static function makeLabelForMenu(&$output, $page)
+	{
+		if ( $page->pagePlace->with_image == 1 AND $page->menu_image )
+		{
+			$imageTag = '<span class="menu-inner-image">'
+				. Html::img($page->getImageUrl('full', 'menu_image'), ['alt'=>$page->name])
+				. '</span>';
+
+			if ( $page->pagePlace->image_before_label )
+			{
+				$label = $imageTag . $page->name;
+			}
+			else
+			{
+				$label = $page->name . $imageTag;
+			}
+		}
+		else
+		{
+			$label = $page->name;
+		}
+
+		$output[$page->id]['label'] = $label;
+	}
+
+	/**
+	 * Helper for "getChildrenForMenu"
+	 *
+	 * @param array $output
+	 * @param Page|array $page
+	 */
+	protected static function makeUrlForMenu(&$output, $page)
+	{
+		if ( $page->is_main == 1 )
+		{
+			$output[$page->id]['url'] = '/';
+		}
+		else
+		{
+			$output[$page->id]['url'] = ($page->type == Page::TYPE_TEXT) ? ['/content/view/page', 'url'=>$page->url] : $page->link_url;
+		}
 	}
 
 	/**
@@ -183,7 +247,9 @@ class Page extends \webvimark\components\BaseActiveRecord
 			[['link_url'], 'required', 'on'=>self::TYPE_LINK . '_scenario'],
 
 			[['body'], 'safe'],
-			[['name', 'url', 'meta_title', 'meta_keywords', 'meta_description'], 'string', 'max' => 255]
+			[['name', 'url', 'meta_title', 'meta_keywords', 'meta_description'], 'string', 'max' => 255],
+
+			[['menu_image'], 'image', 'maxSize' => 1024*1024*1],
 		];
 	}
 
@@ -200,6 +266,7 @@ class Page extends \webvimark\components\BaseActiveRecord
 			'url' => 'Ссылка',
 			'body' => 'Текст',
 			'type' => 'Тип',
+			'menu_image' => 'Картинка в меню',
 			'is_main' => 'Сделать главной',
 			'link_url' => 'Ссылка на страницу',
 			'parent_id' => 'Parent ID',

@@ -187,6 +187,26 @@ class PageController extends AdminDefaultController
 	}
 
 	/**
+	 * Delete menu image
+	 *
+	 * @param int $pageId
+	 */
+	public function actionDeleteMenuImage($pageId)
+	{
+		$page = Page::findOne($pageId);
+
+		if ( $page )
+		{
+			$page->deleteImage($page->menu_image);
+
+			$page->menu_image = null;
+			$page->save(false);
+		}
+
+		$this->redirect(['update', 'id'=>$pageId]);
+	}
+
+	/**
 	 * @inheritdoc
 	 */
 	protected function getRedirectPage($action, $model = null)

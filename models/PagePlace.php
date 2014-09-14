@@ -12,6 +12,8 @@ use yii\behaviors\TimestampBehavior;
  * @property integer $id
  * @property integer $active
  * @property integer $with_children
+ * @property integer $with_image
+ * @property integer $image_before_label
  * @property integer $sorter
  * @property integer $type
  * @property string $name
@@ -52,7 +54,7 @@ class PagePlace extends \webvimark\components\BaseActiveRecord
 	public function rules()
 	{
 		return [
-			[['active', 'sorter', 'created_at', 'updated_at'], 'integer'],
+			[['active', 'sorter', 'with_children', 'image_before_label', 'with_image', 'created_at', 'updated_at'], 'integer'],
 			[['name', 'code', 'type'], 'required'],
 			[['name', 'code'], 'string', 'max' => 255],
 			[['code'], 'unique']
@@ -67,6 +69,8 @@ class PagePlace extends \webvimark\components\BaseActiveRecord
 		return [
 			'id' => 'ID',
 			'active' => 'Активно',
+			'with_children' => 'С подменю',
+			'with_image' => 'С картинкой',
 			'sorter' => 'Порядок',
 			'name' => 'Название',
 			'code' => 'Код',

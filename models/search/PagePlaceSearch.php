@@ -15,7 +15,7 @@ class PagePlaceSearch extends PagePlace
 	public function rules()
 	{
 		return [
-			[['id', 'active', 'sorter', 'type', 'with_children', 'created_at', 'updated_at'], 'integer'],
+			[['id', 'active', 'sorter', 'type', 'with_children', 'with_image', 'created_at', 'updated_at'], 'integer'],
 			[['name', 'code'], 'safe'],
 		];
 	}
@@ -51,6 +51,7 @@ class PagePlaceSearch extends PagePlace
 			'page_place.active' => $this->active,
 			'page_place.type' => $this->type,
 			'page_place.with_children' => $this->with_children,
+			'page_place.with_image' => $this->with_image,
 			'page_place.sorter' => $this->sorter,
 			'page_place.created_at' => $this->created_at,
 			'page_place.updated_at' => $this->updated_at,

@@ -2,6 +2,7 @@
 
 use webvimark\extensions\FormFieldsVisibility\FormFieldsVisibility;
 use webvimark\modules\content\models\Page;
+use webvimark\modules\content\models\PageCustomLayout;
 use yii\helpers\Html;
 
 /**
@@ -26,19 +27,34 @@ $this->params['breadcrumbs'][] = $this->title;
 
 			<?php if ( $model->type == Page::TYPE_TEXT ): ?>
 
+				<?php
+				$fieldVisibilityAttributes = [
+					'active'                => $model->getAttributeLabel('active'),
+					'is_main'               => $model->getAttributeLabel('is_main'),
+					'url'                   => $model->getAttributeLabel('url'),
+					'menu_image'            => $model->getAttributeLabel('menu_image'),
+					'page_place_id'         => $model->getAttributeLabel('page_place_id'),
+					'page_custom_layout_id' => $model->getAttributeLabel('page_custom_layout_id'),
+					'meta_description'      => $model->getAttributeLabel('meta_description'),
+					'meta_keywords'         => $model->getAttributeLabel('meta_keywords'),
+					'meta_title'            => $model->getAttributeLabel('meta_title'),
+				];
+
+				if ( PageCustomLayout::find()->andWhere(['active'=>1])->count('id') == 0 )
+				{
+					unset($fieldVisibilityAttributes['page_custom_layout_id']);
+				}
+
+				if ( !$model->pagePlace OR $model->pagePlace->with_image != 1 )
+				{
+					unset($fieldVisibilityAttributes['menu_image']);
+				}
+				?>
+
 				<?= FormFieldsVisibility::widget([
 					'model'=>$model,
 					'storageId'=>'page_type_text',
-					'attributes' => [
-						'active'                => $model->getAttributeLabel('active'),
-						'is_main'               => $model->getAttributeLabel('is_main'),
-						'url'                   => $model->getAttributeLabel('url'),
-						'page_place_id'         => $model->getAttributeLabel('page_place_id'),
-						'page_custom_layout_id' => $model->getAttributeLabel('page_custom_layout_id'),
-						'meta_description'      => $model->getAttributeLabel('meta_description'),
-						'meta_keywords'         => $model->getAttributeLabel('meta_keywords'),
-						'meta_title'            => $model->getAttributeLabel('meta_title'),
-					],
+					'attributes' => $fieldVisibilityAttributes,
 				]) ?>
 
 			<?php elseif ( $model->type == Page::TYPE_LINK ): ?>
@@ -47,7 +63,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					'model'=>$model,
 					'storageId'=>'page_type_link',
 					'attributes' => [
-						'page_place_id'         => $model->getAttributeLabel('page_place_id'),
+						'page_place_id' => $model->getAttributeLabel('page_place_id'),
 					],
 				]) ?>
 

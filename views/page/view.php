@@ -99,6 +99,12 @@ $this->params['breadcrumbs'][] = $this->title;
 						'visible'=>$model->type == Page::TYPE_TEXT,
 					],
 					[
+						'attribute'=>'menu_image',
+						'value'=>Html::img($model->getImageUrl('full', 'menu_image')),
+						'visible'=>is_file($model->getImagePath('full', 'menu_image')) AND $model->type == Page::TYPE_TEXT,
+						'format'=>'raw',
+					],
+					[
 						'attribute'=>'link_url',
 						'visible'=>$model->type == Page::TYPE_LINK,
 					],
