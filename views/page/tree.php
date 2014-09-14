@@ -55,7 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			'parentIdField' => 'parent_id',
 			'statusField'   => 'active',
 			'orderField'    => 'sorter',
-			'withChildren'    => $pagePlace->with_children == 1,
+			'withChildren'  => @$pagePlace->with_children == 1,
 			'leafName'      => function ($model) {
 					$pageName = $model->is_main == 1 ? '<span style="color:green; font-style: italic;">'.$model->name.'</span>' : $model->name;
 
