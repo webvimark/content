@@ -140,6 +140,11 @@ class PageUrlRule extends UrlRule
 			$url = end($parts);
 			$pageRoute = $this->getPageRecursiveUrl($url);
 
+			if ( $languagePart )
+			{
+				$pageRoute = $languagePart . '/' . $pageRoute;
+			}
+
 			if ( $path == $pageRoute )
 				return ['content/view/page', ['url'=>$url, '_language'=>$languagePart]];
 		}
