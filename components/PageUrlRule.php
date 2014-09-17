@@ -73,12 +73,13 @@ class PageUrlRule extends UrlRule
 	{
 		if ( isset($this->_pagesByUrl[$url]) )
 		{
-			$parentId = array_pop($this->_pagesByUrl[$url]);
+			$tmpByUrl = $this->_pagesByUrl[$url];
+			$parentId = array_pop($tmpByUrl);
 
 			if ( $parentId AND isset($this->_pagesById[$parentId]) )
 			{
-				$tmp = array_keys($this->_pagesById[$parentId]);
-				$parentUrl = array_pop($tmp);
+				$tmpById = array_keys($this->_pagesById[$parentId]);
+				$parentUrl = array_pop($tmpById);
 
 				$url = $this->getPageRecursiveUrl($parentUrl) . '/' . $url;
 			}
