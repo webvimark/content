@@ -174,7 +174,14 @@ class Page extends \webvimark\components\BaseActiveRecord
 		}
 		else
 		{
-			$output[$page->id]['url'] = ($page->type == Page::TYPE_TEXT) ? ['/content/view/page', 'url'=>$page->url] : $page->link_url;
+			if ( $page->type == Page::TYPE_TEXT )
+			{
+				$output[$page->id]['url'] = ['/content/view/page', 'url'=>$page->url];
+			}
+			else
+			{
+				$output[$page->id]['url'] =  ['/' . rtrim($page->link_url, '/')];
+			}
 		}
 	}
 
