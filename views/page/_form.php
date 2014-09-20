@@ -28,7 +28,7 @@ use webvimark\extensions\BootstrapSwitch\BootstrapSwitch;
 
 	<?= $form->field($model->loadDefaultValues(), 'active')->checkbox(['class'=>'b-switch'], false) ?>
 
-	<?php if ( $model->type == Page::TYPE_TEXT AND $model->is_main == 0 ): ?>
+	<?php if ( $model->is_main == 0 ): ?>
 		<?= $form->field($model->loadDefaultValues(), 'is_main')->checkbox(['class'=>'b-switch'], false) ?>
 	<?php endif; ?>
 

@@ -60,9 +60,11 @@ $this->params['breadcrumbs'][] = $this->title;
 			<?php elseif ( $model->type == Page::TYPE_LINK ): ?>
 
 				<?= FormFieldsVisibility::widget([
-					'model'=>$model,
-					'storageId'=>'page_type_link',
+					'model'      => $model,
+					'storageId'  => 'page_type_link',
 					'attributes' => [
+						'active'        => $model->getAttributeLabel('active'),
+						'is_main'       => $model->getAttributeLabel('is_main'),
 						'page_place_id' => $model->getAttributeLabel('page_place_id'),
 					],
 				]) ?>

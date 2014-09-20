@@ -1,6 +1,7 @@
 <?php
 namespace webvimark\modules\content\components;
 
+use webvimark\modules\content\models\Page;
 use yii\db\Query;
 use yii\helpers\ArrayHelper;
 use yii\web\Request;
@@ -101,11 +102,22 @@ class PageUrlRule extends UrlRule
 		// If it's base url - call main page
 		if ( $request->getPathInfo() === '' )
 		{
-			$url = $this->getMainPageUrl();
+			$mainPage = $this->getMainPage();
 
-			if ( $url !== false )
+			if ( $mainPage !== false )
 			{
-				return ['content/view/page', ['url'=>$url]];
+				if ( $mainPage['type'] == Page::TYPE_TEXT )
+				{
+					return ['/content/view/page', ['url'=>$mainPage['url']]];
+				}
+				elseif ( $mainPage['type'] == Page::TYPE_LINK )
+				{
+					return [
+						'/' . ltrim($mainPage['link_url'], '/'),
+						[]
+					];
+
+				}
 			}
 		}
 
@@ -173,14 +185,14 @@ class PageUrlRule extends UrlRule
 	/**
 	 * @return bool|string
 	 */
-	protected function getMainPageUrl()
+	protected function getMainPage()
 	{
 		return (new Query())
-			->select('url')
+			->select(['url', 'link_url', 'type'])
 			->from('page')
 			->where([
 				'page.is_main'=>1,
 			])
-			->scalar();
+			->one();
 	}
 }
