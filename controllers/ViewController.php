@@ -21,6 +21,25 @@ use Yii;
 class ViewController extends BaseController
 {
 	/**
+	 * Little feature for webvimark/module-user-management
+	 *
+	 * Set freeAccess true or false in config.php for content module
+	 *
+	 * @var bool
+	 */
+	public $freeAccess = false;
+
+	/**
+	 * Little feature for webvimark/module-user-management
+	 */
+	public function init()
+	{
+		$this->freeAccess = $this->module->freeAccess;
+
+		parent::init();
+	}
+
+	/**
 	 * @param string $url
 	 *
 	 * @throws \yii\web\NotFoundHttpException

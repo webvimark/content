@@ -53,6 +53,7 @@ In your config/web.php
 	'modules'=>[
 		'content' => [
 			'class' => 'webvimark\modules\content\ContentModule',
+			'freeAccess' => true, // Feature for webvimark/module-user-management. Default is false
 		],
 	],
 

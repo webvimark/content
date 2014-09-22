@@ -25,6 +25,15 @@ class ContentModule extends \yii\base\Module
 
 	public $cacheTime = 86400; // 24 hours
 
+	/**
+	 * Little feature for webvimark/module-user-management
+	 *
+	 * Set freeAccess true or false for "ViewController" where all pages rendered
+	 *
+	 * @var bool
+	 */
+	public $freeAccess = false;
+
 	public function init()
 	{
 		parent::init();
