@@ -15,7 +15,7 @@ class PageWidgetSearch extends PageWidget
 	public function rules()
 	{
 		return [
-			[['id', 'active', 'sorter', 'position', 'has_settings', 'created_at', 'updated_at'], 'integer'],
+			[['id', 'active', 'sorter', 'position', 'only_one', 'has_settings', 'is_internal', 'created_at', 'updated_at'], 'integer'],
 			[['name', 'description', 'class', 'options', 'settings_url'], 'safe'],
 		];
 	}
@@ -51,6 +51,7 @@ class PageWidgetSearch extends PageWidget
 			'page_widget.active' => $this->active,
 			'page_widget.sorter' => $this->sorter,
 			'page_widget.position' => $this->position,
+			'page_widget.only_one' => $this->only_one,
 			'page_widget.has_settings' => $this->has_settings,
 			'page_widget.created_at' => $this->created_at,
 			'page_widget.updated_at' => $this->updated_at,

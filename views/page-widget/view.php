@@ -47,6 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						'format'=>'raw',
 					],
 					'name',
+					'only_one:boolean',
 					'position',
 					'description',
 					'class',

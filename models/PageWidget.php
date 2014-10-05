@@ -18,6 +18,7 @@ use yii\behaviors\TimestampBehavior;
  * @property string $class
  * @property string $options
  * @property integer $is_internal
+ * @property integer $only_one
  * @property integer $has_settings
  * @property string $settings_url
  * @property integer $created_at
@@ -29,6 +30,7 @@ class PageWidget extends \webvimark\components\BaseActiveRecord
 {
 	const POSITION_CENTER = 0;
 	const POSITION_SIDE = 1;
+	const POSITION_HEADER_FOOTER = 2;
 
 
 	/**
@@ -55,7 +57,7 @@ class PageWidget extends \webvimark\components\BaseActiveRecord
 	public function rules()
 	{
 		return [
-			[['active', 'sorter', 'position', 'has_settings', 'created_at', 'updated_at'], 'integer'],
+			[['active', 'sorter', 'position', 'has_settings', 'only_one', 'created_at', 'updated_at'], 'integer'],
 			[['position', 'name', 'class'], 'required'],
 			[['name', 'description', 'class', 'options', 'settings_url'], 'string', 'max' => 255]
 		];
@@ -75,9 +77,10 @@ class PageWidget extends \webvimark\components\BaseActiveRecord
 			'description' => 'Описание',
 			'class' => 'Класс',
 			'options' => 'Опции',
-			'has_settings' => 'Has Settings',
+			'has_settings' => 'Есть настройки',
 			'is_internal' => 'Is Internal',
-			'settings_url' => 'Settings Url',
+			'only_one' => 'Один на страницу',
+			'settings_url' => 'Ссылка на настройки',
 			'created_at' => 'Создано',
 			'updated_at' => 'Обновлено',
 		];
@@ -98,8 +101,9 @@ class PageWidget extends \webvimark\components\BaseActiveRecord
 	public static function getPositionList()
 	{
 		return array(
-			self::POSITION_CENTER => 'Center',
-			self::POSITION_SIDE   => 'Side',
+			self::POSITION_CENTER        => 'Center',
+			self::POSITION_SIDE          => 'Side',
+			self::POSITION_HEADER_FOOTER => 'Header-Footer',
 		);
 	}
 

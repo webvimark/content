@@ -79,9 +79,6 @@ $this->params['breadcrumbs'][] = $this->title;
 							},
 						'format'=>'raw',
 					],
-					'description',
-//					'class',
-					'options',
 					[
 						'class'=>'webvimark\components\StatusColumn',
 						'attribute'=>'has_settings',
@@ -91,6 +88,10 @@ $this->params['breadcrumbs'][] = $this->title;
 					[
 						'class'=>'webvimark\components\StatusColumn',
 						'attribute'=>'is_internal',
+					],
+					[
+						'class'=>'webvimark\components\StatusColumn',
+						'attribute'=>'only_one',
 					],
 					[
 						'class'=>'webvimark\components\StatusColumn',

@@ -29,6 +29,9 @@ Configuration
 In your config/web.php
 
 ```php
+
+	'layout'=>'@vendor/webvimark/module-content/views/layouts/defaultMain',
+
 	'urlManager'   => [
 		'rules'=>[
 

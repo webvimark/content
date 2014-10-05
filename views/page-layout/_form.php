@@ -21,9 +21,12 @@ use webvimark\extensions\BootstrapSwitch\BootstrapSwitch;
 
 	<?= $form->field($model, 'name')->textInput(['maxlength' => 255, 'autofocus'=>$model->isNewRecord ? true:false]) ?>
 
-	<?= $form->field($model->loadDefaultValues(), 'is_main')->checkbox(['class'=>'b-switch'], false) ?>
+	<?php if ( Yii::$app->user->isSuperadmin ): ?>
+		<?= $form->field($model->loadDefaultValues(), 'is_main')->checkbox(['class'=>'b-switch'], false) ?>
 
-	<?= $form->field($model->loadDefaultValues(), 'is_system')->checkbox(['class'=>'b-switch'], false) ?>
+		<?= $form->field($model->loadDefaultValues(), 'is_system')->checkbox(['class'=>'b-switch'], false) ?>
+
+	<?php endif; ?>
 
 	<div class="form-group">
 		<div class="col-sm-offset-3 col-sm-9">

@@ -36,7 +36,7 @@ if ( $page->meta_description )
 		</div>
 	<?php endif; ?>
 
-	<div class="page-inline-editor" id="content-page-<?= $page->id ?>">
+	<div class="page-inline-editor page-wrapper" id="content-page-<?= $page->id ?>">
 		<?= $page->body ?>
 
 	</div>

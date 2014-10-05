@@ -71,12 +71,12 @@ class ViewController extends BaseController
 			{
 				$this->module->defaultParentLayout = $page->pageCustomLayout->path;
 
-				$this->layout = $this->getLayoutBasedOnWidgetPositions($layoutWidgets);
+				$this->layout = PageLayout::getLayoutBasedOnWidgetPositions($layoutWidgets);
 			}
 		}
 		else
 		{
-			$this->layout = $this->getLayoutBasedOnWidgetPositions($layoutWidgets);
+			$this->layout = PageLayout::getLayoutBasedOnWidgetPositions($layoutWidgets);
 		}
 
 		return $this->render('page', compact('page'));
@@ -110,31 +110,4 @@ class ViewController extends BaseController
 
 		return $page;
 	}
-
-	/**
-	 * Define which of 4 default layouts use (1, 2 or 3 columns)
-	 *
-	 * @param array $layoutWidgets
-	 *
-	 * @return string
-	 */
-	protected function getLayoutBasedOnWidgetPositions($layoutWidgets)
-	{
-		if ( count($layoutWidgets['left']) > 0 AND count($layoutWidgets['right']) > 0 ) // 3 columns
-		{
-			return 'left_center_right';
-		}
-		elseif ( count($layoutWidgets['left']) > 0 AND count($layoutWidgets['right']) == 0 ) // 2 columns (left)
-		{
-			return 'left_center';
-		}
-		elseif ( count($layoutWidgets['left']) == 0 AND count($layoutWidgets['right']) > 0 ) // 2 columns (right)
-		{
-			return 'center_right';
-		}
-		else // 1 column
-		{
-			return 'center';
-		}
-	}
-} 
+}

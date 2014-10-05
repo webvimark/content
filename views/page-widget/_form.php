@@ -24,6 +24,8 @@ use webvimark\extensions\BootstrapSwitch\BootstrapSwitch;
 
 	<?= $form->field($model, 'position')->dropDownList(PageWidget::getPositionList(), ['prompt'=>'']) ?>
 
+	<?= $form->field($model->loadDefaultValues(), 'only_one')->checkbox(['class'=>'b-switch'], false) ?>
+
 	<?= $form->field($model->loadDefaultValues(), 'has_settings')->checkbox(['class'=>'b-switch'], false) ?>
 
 	<?= $form->field($model, 'settings_url')->textInput(['maxlength' => 255]) ?>

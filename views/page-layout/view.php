@@ -47,7 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						<th>
 							<?= $this->render('_availableWidgets', [
 								'layoutPosition' => PageLayoutHasPageWidget::POSITION_HEADER,
-								'widgetPosition' => PageWidget::POSITION_CENTER,
+								'widgetPosition' => PageWidget::POSITION_HEADER_FOOTER,
 							]) ?>
 						</th>
 					</tr>
@@ -178,7 +178,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					<th>
 						<?= $this->render('_availableWidgets', [
 							'layoutPosition' => PageLayoutHasPageWidget::POSITION_FOOTER,
-							'widgetPosition' => PageWidget::POSITION_CENTER,
+							'widgetPosition' => PageWidget::POSITION_HEADER_FOOTER,
 						]) ?>
 					</th>
 				</tr>

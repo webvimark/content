@@ -12,20 +12,18 @@ use webvimark\modules\content\models\PageLayoutHasPageWidget;
 
 <?php $layoutWidgets = Singleton::getData('_contentLayoutWidgets') ?>
 
-<?php $this->beginContent($this->context->module->defaultParentLayout) ?>
+<?php $this->beginContent(Yii::$app->getModule('content')->defaultParentLayout) ?>
 
 <?php if ( count($layoutWidgets['header']) > 0 ): ?>
-	<div class="row">
-		<div class="<?= $this->context->module->center1ColumnCssClass ?>">
-			<?php PageLayoutHasPageWidget::renderWidgets($layoutWidgets, 'header') ?>
-		</div>
-	</div>
+	<?php PageLayoutHasPageWidget::renderWidgets($layoutWidgets, 'header') ?>
+
 <?php endif; ?>
 
+<div class="<?= Yii::$app->getModule('content')->wrapperCssClass ?>">
 
 	<div class="row">
 
-		<div class="<?= $this->context->module->center1ColumnCssClass ?>">
+		<div class="<?= Yii::$app->getModule('content')->center1ColumnCssClass ?>">
 			<?php PageLayoutHasPageWidget::renderWidgets($layoutWidgets, 'top') ?>
 
 			<?= $content ?>
@@ -34,13 +32,11 @@ use webvimark\modules\content\models\PageLayoutHasPageWidget;
 		</div>
 
 	</div>
+</div>
 
 <?php if ( count($layoutWidgets['footer']) > 0 ): ?>
-	<div class="row">
-		<div class="<?= $this->context->module->center1ColumnCssClass ?>">
-			<?php PageLayoutHasPageWidget::renderWidgets($layoutWidgets, 'footer') ?>
-		</div>
-	</div>
+	<?php PageLayoutHasPageWidget::renderWidgets($layoutWidgets, 'footer') ?>
+
 <?php endif; ?>
 
 

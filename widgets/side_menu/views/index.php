@@ -12,6 +12,7 @@ use yii\widgets\Menu;
 		'items'=>Page::getItemsForMenu($this->context->place),
 		'activateParents'=>true,
 		'encodeLabels'=>false,
+		'linkTemplate'=>'<span class="arrow-before">&nbsp;</span><a href="{url}">{label}</a><span class="arrow-after">&nbsp;</span>',
 		'options'=>[
 			'class'=>'nested-menu',
 		],
