@@ -25,7 +25,7 @@ use webvimark\modules\content\models\PageLayoutHasPageWidget;
 			<?php PageLayoutHasPageWidget::renderWidgets($layoutWidgets, 'left') ?>
 		</div>
 
-		<div class="<?= Yii::$app->getModule('content')->center2ColumnCssClass ?>">
+		<div class="<?= Yii::$app->getModule('content')->centerForLeft2ColumnCssClass ?>">
 			<?php PageLayoutHasPageWidget::renderWidgets($layoutWidgets, 'top') ?>
 
 			<?= $content ?>

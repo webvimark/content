@@ -14,7 +14,8 @@ Singleton::setData('_contentLayoutWidgets', $layoutWidgets);
 
 $layout = PageLayout::getLayoutBasedOnWidgetPositions($layoutWidgets);
 
-//Yii::$app->setLayoutPath('@vendor/webvimark/module-content/views/layouts/' . $layout . '.php');
 $this->beginContent('@vendor/webvimark/module-content/views/layouts/' . $layout . '.php');
+
 echo $content;
+
 $this->endContent();

@@ -19,7 +19,7 @@ use yii\behaviors\TimestampBehavior;
  *
  * @property TextBlock[] $textBlocks
  */
-class TextBlockPlace extends \yii\db\ActiveRecord
+class TextBlockPlace extends CommonParentClass
 {
 	/**
 	* @inheritdoc

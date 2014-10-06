@@ -21,7 +21,7 @@ use yii\caching\DbDependency;
  * @property Page[] $pages
  * @property PageLayoutHasPageWidget[] $pageLayoutHasPageWidgets
  */
-class PageLayout extends \webvimark\components\BaseActiveRecord
+class PageLayout extends CommonParentClass
 {
 	/**
 	 * @return PageLayoutHasPageWidget[]

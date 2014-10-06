@@ -19,7 +19,7 @@ use yii\behaviors\TimestampBehavior;
  *
  * @property TextBlockPlace $textBlockPlace
  */
-class TextBlock extends \yii\db\ActiveRecord
+class TextBlock extends CommonParentClass
 {
 
 	/**
@@ -144,4 +144,5 @@ class TextBlock extends \yii\db\ActiveRecord
 		return $this->hasOne(TextBlockPlace::className(), ['id' => 'text_block_place_id'])
 			->where(['text_block_place.active'=>1]);
 	}
+
 }

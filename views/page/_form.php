@@ -34,6 +34,31 @@ use webvimark\extensions\BootstrapSwitch\BootstrapSwitch;
 
 	<?= $form->field($model, 'name')->textInput(['maxlength' => 255, 'autofocus'=>$model->isNewRecord ? true:false]) ?>
 
+	<?php if ( $model->pagePlace AND $model->pagePlace->with_image == 1 ): ?>
+
+		<?php if ( ! $model->isNewRecord AND is_file($model->getImagePath('full', 'menu_image'))): ?>
+			<div class='form-group field-page-menu_image'>
+				<div class='col-sm-3'></div>
+				<div class='col-sm-6'>
+					<?= Html::img($model->getImageUrl('full', 'menu_image'), ['alt'=>'menu_image']) ?>
+					<br/>
+					<?= Html::a(
+						'<i class="fa fa-trash-o"></i>',
+						['delete-menu-image', 'pageId'=>$model->id],
+						[
+							'style'=>'color:red',
+							'data-confirm'=>'Вы уверены ?',
+						]
+					) ?>
+				</div>
+			</div>
+
+		<?php endif; ?>
+
+		<?= $form->field($model, 'menu_image', ['enableClientValidation'=>false, 'enableAjaxValidation'=>false])
+			->fileInput(['class'=>'form-control']) ?>
+	<?php endif; ?>
+
 	<?php if ( $model->type == Page::TYPE_LINK ): ?>
 
 		<?= $form->field($model, 'link_url')->dropDownList(Page::getLinkUrlList(), ['prompt'=>'']) ?>
@@ -47,31 +72,6 @@ use webvimark\extensions\BootstrapSwitch\BootstrapSwitch;
 	<?php else: ?>
 
 		<?= $form->field($model, 'url')->textInput(['maxlength' => 255]) ?>
-
-		<?php if ( $model->pagePlace AND $model->pagePlace->with_image == 1 ): ?>
-
-			<?php if ( ! $model->isNewRecord AND is_file($model->getImagePath('full', 'menu_image'))): ?>
-				<div class='form-group field-page-menu_image'>
-					<div class='col-sm-3'></div>
-					<div class='col-sm-6'>
-						<?= Html::img($model->getImageUrl('full', 'menu_image'), ['alt'=>'menu_image']) ?>
-						<br/>
-						<?= Html::a(
-							'<i class="fa fa-trash-o"></i>',
-							['delete-menu-image', 'pageId'=>$model->id],
-							[
-								'style'=>'color:red',
-								'data-confirm'=>'Вы уверены ?',
-							]
-						) ?>
-					</div>
-				</div>
-
-			<?php endif; ?>
-
-			<?= $form->field($model, 'menu_image', ['enableClientValidation'=>false, 'enableAjaxValidation'=>false])
-				->fileInput(['class'=>'form-control']) ?>
-		<?php endif; ?>
 
 		<?= $form->field($model, 'page_place_id')
 			->dropDownList(

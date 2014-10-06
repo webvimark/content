@@ -37,9 +37,8 @@ use yii\helpers\Url;
  * @property PagePlace $pagePlace
  * @property PageLayout $pageLayout
  * @property PageCustomLayout $pageCustomLayout
- * @property PageText[] $pageTexts
  */
-class Page extends \webvimark\components\BaseActiveRecord
+class Page extends CommonParentClass
 {
 	const TYPE_TEXT = 0;
 	const TYPE_LINK = 1;
@@ -143,13 +142,16 @@ class Page extends \webvimark\components\BaseActiveRecord
 				. Html::img($page->getImageUrl('full', 'menu_image'), ['alt'=>$page->name])
 				. '</span>';
 
+			$textTag = "<span class='menu-inner-text'>{$page->name}</span>";
+
+
 			if ( $page->pagePlace->image_before_label )
 			{
-				$label = $imageTag . $page->name;
+				$label = $imageTag . $textTag;
 			}
 			else
 			{
-				$label = $page->name . $imageTag;
+				$label = $textTag . $imageTag;
 			}
 		}
 		else
@@ -326,14 +328,6 @@ class Page extends \webvimark\components\BaseActiveRecord
 	public function getPageCustomLayout()
 	{
 		return $this->hasOne(PageCustomLayout::className(), ['id' => 'page_custom_layout_id']);
-	}
-
-	/**
-	* @return \yii\db\ActiveQuery
-	*/
-	public function getPageTexts()
-	{
-		return $this->hasMany(PageText::className(), ['page_id' => 'id']);
 	}
 
 	/**

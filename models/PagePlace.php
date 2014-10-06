@@ -23,7 +23,7 @@ use yii\behaviors\TimestampBehavior;
  *
  * @property Page[] $pages
  */
-class PagePlace extends \webvimark\components\BaseActiveRecord
+class PagePlace extends CommonParentClass
 {
 	const NO_PLACE_NAME = 'Страницы вне меню';
 

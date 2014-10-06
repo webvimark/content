@@ -76,6 +76,7 @@ $this->params['breadcrumbs'][] = 'Редактирование';
 						'active'        => $model->getAttributeLabel('active'),
 						'is_main'       => $model->getAttributeLabel('is_main'),
 						'page_place_id' => $model->getAttributeLabel('page_place_id'),
+						'menu_image'    => $model->getAttributeLabel('menu_image'),
 					],
 				]) ?>
 

@@ -57,6 +57,18 @@ In your config/web.php
 		'content' => [
 			'class' => 'webvimark\modules\content\ContentModule',
 			'freeAccess' => true, // Feature for webvimark/module-user-management. Default is false
+
+			/*
+			'left3ColumnCssClass'           => 'col-xs-15',
+			'center3ColumnCssClass'         => 'col-xs-30',
+			'right3ColumnCssClass'          => 'col-xs-15',
+
+			'left2ColumnCssClass'           => 'col-xs-15',
+			'centerForLeft2ColumnCssClass'  => 'col-xs-45',
+
+			'right2ColumnCssClass'          => 'col-xs-15',
+			'centerForRight2ColumnCssClass' => 'col-xs-45',
+			*/
 		],
 	],
 

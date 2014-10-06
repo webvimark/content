@@ -26,7 +26,7 @@ use yii\behaviors\TimestampBehavior;
  *
  * @property PageLayoutHasPageWidget[] $pageLayoutHasPageWidgets
  */
-class PageWidget extends \webvimark\components\BaseActiveRecord
+class PageWidget extends CommonParentClass
 {
 	const POSITION_CENTER = 0;
 	const POSITION_SIDE = 1;

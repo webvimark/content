@@ -9,8 +9,10 @@ class ContentModule extends \yii\base\Module
 	public $right3ColumnCssClass = 'col-xs-15';
 
 	public $left2ColumnCssClass = 'col-xs-15';
-	public $center2ColumnCssClass = 'col-xs-45';
+	public $centerForLeft2ColumnCssClass = 'col-xs-45';
+
 	public $right2ColumnCssClass = 'col-xs-15';
+	public $centerForRight2ColumnCssClass = 'col-xs-45';
 
 	public $center1ColumnCssClass = 'col-xs-60';
 

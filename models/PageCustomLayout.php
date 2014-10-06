@@ -19,7 +19,7 @@ use yii\behaviors\TimestampBehavior;
  *
  * @property Page[] $pages
  */
-class PageCustomLayout extends \webvimark\components\BaseActiveRecord
+class PageCustomLayout extends CommonParentClass
 {
 	// When page should extend this layout and use default left_center, left_center_right, etc
 	const TYPE_EXTEND = 0;
