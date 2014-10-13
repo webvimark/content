@@ -16,7 +16,7 @@ class ContentModule extends \yii\base\Module
 
 	public $center1ColumnCssClass = 'col-xs-60';
 
-	public $wrapperCssClass = 'container';
+	public $wrapperCssClass = 'container page-middle-wrapper';
 
 	/**
 	 * This layout is a parent for 4 default content layouts

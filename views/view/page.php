@@ -30,19 +30,19 @@ if ( $page->meta_description )
 
 <div style="position: relative; width: 100%">
 
-	<?php if ( User::canRoute(['/content/page/inline-save']) ): ?>
+	<?php if ( false AND User::canRoute(['/content/page/inline-save']) ): ?>
 		<div id="page-inline-edit-btn" style="cursor: pointer; position: absolute; top: -20px; right: -10px">
 			<span class="glyphicon glyphicon-edit" style="color: #008000"></span>
 		</div>
 	<?php endif; ?>
 
-	<div class="page-inline-editor page-wrapper" id="content-page-<?= $page->id ?>">
+	<div class="page-inline-editor page-inner-wrapper" id="content-page-<?= $page->id ?>">
 		<?= $page->body ?>
 
 	</div>
 </div>
 
-<?php if ( User::canRoute(['/content/page/inline-save']) ): ?>
+<?php if ( false AND User::canRoute(['/content/page/inline-save']) ): ?>
 
 	<?php
 	$js = <<<JS

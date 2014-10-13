@@ -71,7 +71,12 @@ use webvimark\extensions\BootstrapSwitch\BootstrapSwitch;
 
 	<?php else: ?>
 
-		<?= $form->field($model, 'url')->textInput(['maxlength' => 255]) ?>
+		<?= $form->field($model, 'url')->textInput(['maxlength' => 255])
+			->hint(Html::a(
+					'ЧПУ',
+					'https://www.google.ru/search?q=%D1%87%D0%B5%D0%BB%D0%BE%D0%B2%D0%B5%D0%BA%D0%BE-%D0%BF%D0%BE%D0%BD%D1%8F%D1%82%D0%BD%D1%8B%D0%B5+%D1%83%D1%80%D0%BB&oq=%D1%87%D0%B5%D0%BB%D0%BE%D0%B2%D0%B5%D0%BA%D0%BE-%D0%BF%D0%BE%D0%BD%D1%8F%D1%82%D0%BD%D1%8B%D0%B5+%D1%83%D1%80%D0%BB',
+					['target'=>'_blank']
+				) .' Вы можете оставить поле пустым.') ?>
 
 		<?= $form->field($model, 'page_place_id')
 			->dropDownList(
@@ -96,7 +101,7 @@ use webvimark\extensions\BootstrapSwitch\BootstrapSwitch;
 			->dropDownList(
 				ArrayHelper::map(PageLayout::find()->asArray()->all(), 'id', 'name'),
 				['prompt'=>'']
-			) ?>
+			)->hint(Html::a('К списку шаблонов', '/content/page-layout/index', ['target'=>'_blank'])) ?>
 
 		<?= $form->field($model, 'body')->textarea() ?>
 

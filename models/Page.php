@@ -258,7 +258,7 @@ class Page extends CommonParentClass
 			[['body'], 'safe'],
 			[['name', 'url', 'meta_title', 'meta_keywords', 'meta_description'], 'string', 'max' => 255],
 
-			[['menu_image'], 'image', 'maxSize' => 1024*1024*1],
+			[['menu_image'], 'image', 'maxSize' => 1024*1024*1, 'extensions'=>['gif', 'png', 'jpg', 'jpeg']],
 		];
 	}
 
@@ -407,5 +407,18 @@ class Page extends CommonParentClass
 		}
 
 		return parent::beforeDelete();
+	}
+
+
+	/**
+	 * @inheritdoc
+	 */
+	public function afterDelete()
+	{
+		$this->bulkDeleteImages(['menu_image']);
+
+		Yii::$app->cache->flush();
+
+		parent::afterDelete();
 	}
 }
